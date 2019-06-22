@@ -1,0 +1,52 @@
+<p>Mapping doc validation</p>
+<ul>
+	<li>Validate the source and target table structure against corresponding mapping doc.</li>
+	<li>Source data type and target data type should be same</li>
+	<li>Length of data types in both source and target should be equal</li>
+	<li>Verify that data field types and formats are specified  </li>
+	<li>Source data type length should not less than the target data type length</li>
+	<li>Validate the name of columns in the table against mapping doc.</li>
+	<li>The data type and length for a particular attribute may vary in files or tables though the semantic definition is the same.</li>
+	<li>Misuse of integrity constraints</li>
+	<li>Constraint Validation</li>
+</ul>
+
+<p>Completeness Issues</p>
+<ul>
+	<li>Ensure that all expected data is loaded into target table.</li>
+	<li>Compare record counts between source and target.</li>
+	<li>Check for any rejected records</li>
+	<li>Check data should not be truncated in the column of target tables</li>
+	<li>Check boundary value analysis</li>
+	<li>Compares unique values of key fields between data loaded to WH and source data Correctness Issues</li>
+	<li>Data that is misspelled or inaccurately recorded</li>
+	<li>Null, non-unique or out of range data</li>
+	<li></li>
+</ul>
+
+  	    
+<p>Data Quality</p>
+<ul>
+	<li>Number check: Need to number check and validate it</li>
+	<li>Date Check: They have to follow date format and it should be same across all records</li>
+	<li>Precision Check</li>
+	<li>Data check</li>
+	<li>Null check</li>
+	<li>Null Validate</li>
+	<li>Verify the null values, where “Not Null” specified for a specific column.</li>
+</ul> 
+
+<p>Duplicate Check</p>
+<li> Needs to validate the unique key, primary key and any other column should be unique as per the business requirements are having any duplicate rows</li>
+<li>Check if any duplicate values exist in any column which is extracting from multiple columns in source and combining into one column</li>
+<li>As per the client requirements, needs to be ensure that no duplicates in combination of multiple columns within target only Date Validation</li>
+<li>To know the row creation date</li>
+
+<li>Validating the Keys and Indexes in the database, i.e., primary and foreign keys in tables are defined as per requirement.</li>
+<li>Check if the primary keys and their corresponding foreign keys are same in two tables.</li>
+
+
+<li>Column names for each table</li>
+<li>Column types for each table</li>
+<li>Whether a default is bound to correct table columns</li>
+<li>Data types between a foreign key column and a column in other table Indices, clustered or non-clustered unique or not unique</li>
