@@ -1,38 +1,36 @@
+
 import mysql.connector
 from mysql.connector import Error  
 
-db1_name = input("1st db name: ")
-
-db2_name = input("2nd db name: ")
-
-
 try:
     connection1 = mysql.connector.connect(host='localhost',
-                                         database=db1_name,
+                                         database='python_db',
                                          user='root',
                                          password='')
-
+    
     if connection1.is_connected():
         cursor = connection1.cursor()
-        cursor.execute("SELECT MAX(id) from orders") # select the table
-        records1 = cursor.fetchall()
-        print("Highest value in this column is", records1)
+        query = "SELECT * FROM customers"
+        cursor.execute(query)
+        cursor.fetchall()
+        result1 = cursor.rowcount
 
     connection2 = mysql.connector.connect(host='localhost',
-                                         database=db2_name,
+                                         database='python_db_1',
                                          user='root',
                                          password='')
 
     if connection2.is_connected():
         cursor = connection2.cursor()
-        cursor.execute("SELECT MAX(id) from orders") # select the table
-        records2 = cursor.fetchall()
-        print("Highest value in this column is", records2)
+        query = "SELECT * FROM customers"
+        cursor.execute(query)
+        cursor.fetchall()
+        result2 = cursor.rowcount
 
-    if(records1 == records2):
-        print("Everything is matching")
+    if(connection1 == connection2):
+        print("Nums of rows is the same")
     else:
-        print("We have a missmatch")
+        print("Num of rows is not the same")
 
 
 except Error as e:
@@ -47,4 +45,4 @@ finally:
     if (connection2.is_connected()):
         cursor.close()
         connection1.close()
-        print("MySQL connection is closed")        
+        print("MySQL connection is closed")
