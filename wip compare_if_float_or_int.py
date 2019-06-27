@@ -1,26 +1,32 @@
 import mysql.connector
 from mysql.connector import Error  
 
+db1_name = input("1st db name: ")
+db2_name = input("1st db name: ")
+table_name = input("1st db table name: ")
+
+
 try:
     connection1 = mysql.connector.connect(host='localhost',
-                                         database='python_db',
+                                         database=db1_name,
                                          user='root',
                                          password='')
+
     
     if connection1.is_connected():
         cursor = connection1.cursor()
-        cursor.execute("SELECT count(*) from customers") # select the table
+        cursor.execute("SELECT count(*) from" + table_name) # select the table
         records1 = cursor.fetchall()
         print("Num of rows:", records1)
 
     connection2 = mysql.connector.connect(host='localhost',
-                                         database='python_db_1',
+                                         database=db2_name,
                                          user='root',
                                          password='')
 
     if connection2.is_connected():
         cursor = connection2.cursor()
-        cursor.execute("SELECT count(*) from customers") # select the table
+        cursor.execute("SELECT count(*) from" + table_name) # select the table
         records2 = cursor.fetchall()
         print("Num of rows:", records2)
 

@@ -5,6 +5,8 @@ db1_name = input("1st db name: ")
 
 db2_name = input("2nd db name: ")
 
+table_name = input("table name: ")
+
 
 try:
     connection1 = mysql.connector.connect(host='localhost',
@@ -14,9 +16,9 @@ try:
 
     if connection1.is_connected():
         cursor = connection1.cursor()
-        cursor.execute("SELECT MAX(id) from orders") # select the table
+        cursor.execute("SELECT MAX(id) from %s",(table_name,)) # select the table
         records1 = cursor.fetchall()
-        print("Highest value in this column is", records1)
+        print("Type & lenght:", records1)
 
     connection2 = mysql.connector.connect(host='localhost',
                                          database=db2_name,
@@ -25,9 +27,9 @@ try:
 
     if connection2.is_connected():
         cursor = connection2.cursor()
-        cursor.execute("SELECT MAX(id) from orders") # select the table
+        cursor.execute("SELECT MAX(id) from %s",(table_name,)) # select t# select the table
         records2 = cursor.fetchall()
-        print("Highest value in this column is", records2)
+        print("Type & lenght:", records2)
 
     if(records1 == records2):
         print("Everything is matching")

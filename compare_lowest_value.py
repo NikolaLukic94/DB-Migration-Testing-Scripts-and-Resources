@@ -1,6 +1,14 @@
 import mysql.connector
 from mysql.connector import Error  
 
+db1_name = input("1st db name: ")
+db1_table_name = input("1st db table name: ")
+db1_column_name = input("1st db column name: ")
+
+db2_name = input("2nd db name: ")
+db2_table_name = input("2nd db table name: ")
+db2_column_name = input("2nd db column name: ")
+
 try:
     connection1 = mysql.connector.connect(host='localhost',
                                          database='python_db',
