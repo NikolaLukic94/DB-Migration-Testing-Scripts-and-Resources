@@ -2,7 +2,9 @@ import mysql.connector
 from mysql.connector import Error  
 
 db1_name = input("1st db name: ")
+db1_table_name = input("1st db table name: ")
 db2_name = input("2nd db name: ")
+db2_table_name = input("2nd db table name: ")
 
 try:
     connection1 = mysql.connector.connect(host='localhost',
@@ -12,9 +14,9 @@ try:
     
     if connection1.is_connected():
         cursor = connection1.cursor()
-        cursor.execute("SHOW TABLES in {}".format(db1_name,)) # select the table
-        records1 = cursor.fetchall()
-        records2 = sorted(records1)
+        cursor.execute("SELECT * FROM {}".format(db1_table_name,))
+        cursor.fetchall()
+        result1 = cursor.rowcount
 
     connection2 = mysql.connector.connect(host='localhost',
                                          database=db2_name,
@@ -23,15 +25,16 @@ try:
 
     if connection2.is_connected():
         cursor = connection2.cursor()
-        cursor.execute("SHOW TABLES in {}".format(db2_name,)) # select the table
-        records1 = cursor.fetchall()
-        records2 = sorted(records1)
-
+        cursor.execute("SELECT * FROM {}".format(db2_table_name,))
+        cursor.fetchall()
+        result2 = cursor.rowcount
 
     if(connection1 == connection2):
-        print("Tables are matching")
+        print("Num of rows is the same.")
     else:
-        print("Tables are not matching")
+        print("Num of rows is not the same")
+        print(result1)
+        print(result2)
 
 
 except Error as e:

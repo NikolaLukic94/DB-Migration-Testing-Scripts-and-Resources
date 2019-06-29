@@ -2,10 +2,12 @@ import mysql.connector
 from mysql.connector import Error  
 
 db1_name = input("1st db name: ")
+db1_table_name = input("1st db table name: ")
+db1_col_name = input("1st db column name: ")
 
 db2_name = input("2nd db name: ")
-
-table_name = input("table name: ")
+db2_table_name = input("2nd db table name: ")
+db2_col_name = input("1st db column name: ")
 
 
 try:
@@ -13,12 +15,11 @@ try:
                                          database=db1_name,
                                          user='root',
                                          password='')
-
+    
     if connection1.is_connected():
         cursor = connection1.cursor()
-        cursor.execute("SELECT MAX(id) from %s",(table_name,)) # select the table
-        records1 = cursor.fetchall()
-        print("Type & lenght:", records1)
+        val_first = cursor.execute("SELECT * from information_schema.columns where table_name = {} and column_name like {} ORDER BY LENGTH({}) DESC LIMIT 1".format(db1_table_name,db1_col_name,db1_col_name)) # select the table
+        cursor.fetchall()
 
     connection2 = mysql.connector.connect(host='localhost',
                                          database=db2_name,
@@ -27,14 +28,13 @@ try:
 
     if connection2.is_connected():
         cursor = connection2.cursor()
-        cursor.execute("SELECT MAX(id) from %s",(table_name,)) # select t# select the table
-        records2 = cursor.fetchall()
-        print("Type & lenght:", records2)
+        val_second = cursor.execute("SELECT * from information_schema.columns where table_name = {} and column_name like {} ORDER BY LENGTH({}) DESC LIMIT 1".format(db2_table_name,db2_col_name,db2_col_name)) # select the table
+        cursor.fetchall()
 
-    if(records1 == records2):
-        print("Everything is matching")
+    if(connection1 == connection2):
+        print("Max: {}".format(val_first))
     else:
-        print("We have a missmatch")
+        print("Max: {}".format(val_second))
 
 
 except Error as e:
@@ -49,4 +49,4 @@ finally:
     if (connection2.is_connected()):
         cursor.close()
         connection1.close()
-        print("MySQL connection is closed")        
+        print("MySQL connection is closed")

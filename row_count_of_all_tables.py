@@ -2,9 +2,7 @@ import mysql.connector
 from mysql.connector import Error  
 
 db1_name = input("1st db name: ")
-db1_table_name = input("1st db table name: ")
 db2_name = input("2nd db name: ")
-db2_table_name = input("2nd db table name: ")
 
 try:
     connection1 = mysql.connector.connect(host='localhost',
@@ -14,9 +12,9 @@ try:
     
     if connection1.is_connected():
         cursor = connection1.cursor()
-        cursor.execute("SELECT * FROM {}".format(db1_table_name,))
-        cursor.fetchall()
-        result1 = cursor.rowcount
+        cursor.execute("SELECT table_name, table_rows FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = '{}'".format(db1_name,)) 
+        records1 = cursor.fetchall()
+        print("Tables:", records1)
 
     connection2 = mysql.connector.connect(host='localhost',
                                          database=db2_name,
@@ -25,14 +23,18 @@ try:
 
     if connection2.is_connected():
         cursor = connection2.cursor()
-        cursor.execute("SELECT * FROM {}".format(db2_table_name,))
-        cursor.fetchall()
-        result2 = cursor.rowcount
+        cursor.execute("SELECT table_name, table_rows FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = '{}'".format(db2_name,)) 
+        records2 = cursor.fetchall()
+        print("Tables:", records2)
 
-    if(connection1 == connection2):
-        print("Nums of rows is the same")
+    if(records1 == records2):
+        print("Everything is matching")
     else:
-        print("Num of rows is not the same")
+        d1 = {sub[0]: sub for sub in records1}
+        d2 = {sub[0]: sub for sub in records2}
+        print("Difference: ")
+        print([d2[k] for k in d2.keys() - d1])
+        print([d1[k] for k in d1.keys() - d2])
 
 
 except Error as e:

@@ -18,7 +18,7 @@ try:
 
     if connection1.is_connected():
         cursor = connection1.cursor()
-        cursor.execute("SELECT DATA_TYPE,CHARACTER_MAXIMUM_LENGTH FROM INFORMATION_SCHEMA.COLUMNS WHERE table_name = %s AND COLUMN_NAME = %s;",(db1_table_name, db1_column_name)) # select the table
+        cursor.execute("SELECT DATA_TYPE,CHARACTER_MAXIMUM_LENGTH FROM INFORMATION_SCHEMA.COLUMNS WHERE table_name = %s AND COLUMN_NAME = %s;",(db1_table_name, db1_column_name))
         records1 = cursor.fetchall()
         print("Type & lenght:", records1)
 
@@ -29,15 +29,11 @@ try:
 
     if connection2.is_connected():
         cursor = connection2.cursor()
-        cursor.execute("SELECT DATA_TYPE,CHARACTER_MAXIMUM_LENGTH FROM INFORMATION_SCHEMA.COLUMNS WHERE table_name = %s AND COLUMN_NAME = %s;",(db2_table_name, db2_column_name)) # select t# select the table
+        cursor.execute("SELECT DATA_TYPE,CHARACTER_MAXIMUM_LENGTH FROM INFORMATION_SCHEMA.COLUMNS WHERE table_name = %s AND COLUMN_NAME = %s;",(db2_table_name, db2_column_name))
         records2 = cursor.fetchall()
         print("Type & lenght:", records2)
 
-    if(records1 == records2):
-        print("Everything is matching")
-    else:
-        print("We have a missmatch")
-
+    if()
 
 except Error as e:
 
