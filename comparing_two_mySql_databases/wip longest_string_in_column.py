@@ -2,8 +2,12 @@ import mysql.connector
 from mysql.connector import Error  
 
 db1_name = input("1st db name: ")
-db2_name = input("1st db name: ")
-table_name = input("1st db table name: ")
+db1_table_name = input("1st db table name: ")
+db1_col_name = input("1st db column name: ")
+
+db2_name = input("2nd db name: ")
+db2_table_name = input("2nd db table name: ")
+db2_col_name = input("1st db column name: ")
 
 
 try:
@@ -11,13 +15,12 @@ try:
                                          database=db1_name,
                                          user='root',
                                          password='')
-
     
     if connection1.is_connected():
         cursor = connection1.cursor()
-        cursor.execute("SELECT count(*) from" + table_name) # select the table
-        records1 = cursor.fetchall()
-        print("Num of rows:", records1)
+        val_first = cursor.execute("SELECT * from information_schema.columns where table_name = '{}' and column_name = '{}' ORDER BY LENGTH('{}') DESC LIMIT 1".format(db1_table_name,db1_col_name,db1_col_name)) # select the table
+        cursor.fetchall()
+        print(val_first)
 
     connection2 = mysql.connector.connect(host='localhost',
                                          database=db2_name,
@@ -26,18 +29,19 @@ try:
 
     if connection2.is_connected():
         cursor = connection2.cursor()
-        cursor.execute("SELECT count(*) from" + table_name) # select the table
-        records2 = cursor.fetchall()
-        print("Num of rows:", records2)
+        val_second = cursor.execute("SELECT * from information_schema.columns where table_name = '{}' and column_name = '{}' ORDER BY LENGTH('{}') DESC LIMIT 1".format(db2_table_name,db2_col_name,db2_col_name)) # select the table
+        cursor.fetchall()
+        print(val_second)
 
-    if(connection1 != connection2):
-        print("data types are different")
+    if(val_first == val_second):
+        print("Matching!")
     else:
-        print("data types are matching")
+        print("")
+        print("Max: {}".format(val_first))
+        print("Max: {}".format(val_second))
 
 
 except Error as e:
-
     print ("Unable to finish", e)
 
 finally:
